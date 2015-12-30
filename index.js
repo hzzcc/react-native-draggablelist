@@ -26,6 +26,8 @@ var DragableList = React.createClass({
         onMove: PropTypes.func, //callback of move
         keys: PropTypes.array, //pre orders of data
         onPressCell: PropTypes.func, //
+        scrollStyle: View.propTypes.style, //scroll view style
+        contentInset: PropTypes.object, //scroll view contentInset
     },
 
     getDefaultProps() {
@@ -194,10 +196,10 @@ var DragableList = React.createClass({
         return (
             <View style={{flex: 1}}>
                 <ScrollView
-                    style={{flex: 1}}
+                    style={[{flex: 1}, this.props.scrollStyle]}
                     scrollEnabled={this.state.scrollable}
                     showsVerticalScrollIndicator={false}
-                    contentInset={{bottom: 0}}
+                    contentInset={this.props.contentInset || {bottom: 0}}
                     automaticallyAdjustContentInsets={false}
                     >
                     {content}

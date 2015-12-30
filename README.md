@@ -17,6 +17,8 @@
             keys={this.state.keys}
             shouldUpdateId={'2'}
             onPressCell={this.onPressCell}
+            scrollStyle: {/*styles*/}, //scroll view style
+            contentInset: {}, //scroll view contentInset
             />
             
     dataSource: isRequired, array of your data include id, like [{id: '1', name: ''}, {id: '2', name: ''}]
