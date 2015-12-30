@@ -114,6 +114,7 @@ var AnimateCell = React.createClass({
                         this.clearTimeout(this.longTimer);
                         // this.clearTimeout(this.longTimerPre);
                         this.props.toggleScroll(true);
+                        this.props.onPressCell && this.props.onPressCell(this.props.rowData);
                         //this._toggleIsActive();
                         console.log('onResponderRelease _toggleIsActive');
                     }

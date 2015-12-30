@@ -19,12 +19,13 @@ var DragableList = React.createClass({
     mixins: [TimerMixin],
 
     propTypes: {
-        dataSource: PropTypes.array.isRequired, //数据
+        dataSource: PropTypes.array.isRequired, //data
         component: PropTypes.func.isRequired, //cell
         cellProps: PropTypes.object, //cell props
         shouldUpdateId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), //需要更新的cell id
-        onMove: PropTypes.func, //移动后的keys
-        keys: PropTypes.array, //排序好的数组
+        onMove: PropTypes.func, //callback of move
+        keys: PropTypes.array, //pre orders of data
+        onPressCell: PropTypes.func, //
     },
 
     getDefaultProps() {
@@ -129,6 +130,7 @@ var DragableList = React.createClass({
                             cellProps={cellProps}
                             cellComponent={this.props.component}
                             rowData={row_data}
+                            onPressCell={this.props.onPressCell}
                             shouldUpdate={shouldUpdate}
                             />
                     );
@@ -158,6 +160,7 @@ var DragableList = React.createClass({
                             cellProps={cellProps}
                             cellComponent={this.props.component}
                             rowData={row_data}
+                            onPressCell={this.props.onPressCell}
                             shouldUpdate={shouldUpdate}
                             />
                     );
@@ -181,6 +184,7 @@ var DragableList = React.createClass({
                         cellProps={cellProps}
                         cellComponent={this.props.component}
                         rowData={row_data}
+                        onPressCell={this.props.onPressCell}
                         shouldUpdate={shouldUpdate}
                         />
                 );
