@@ -211,17 +211,15 @@ var DragableList = React.createClass({
         }
 
         return (
-            <View style={{flex: 1}}>
-                <ScrollView
-                    style={[{flex: 1}, this.props.scrollStyle]}
-                    scrollEnabled={this.state.scrollable}
-                    showsVerticalScrollIndicator={false}
-                    contentInset={this.props.contentInset || {bottom: 0}}
-                    automaticallyAdjustContentInsets={false}
-                    >
-                    {content}
-                </ScrollView>
-            </View>
+            <ScrollView
+                style={[{flex: 1}, this.props.scrollStyle]}
+                scrollEnabled={this.state.scrollable}
+                showsVerticalScrollIndicator={false}
+                contentInset={this.props.contentInset || {bottom: 0}}
+                automaticallyAdjustContentInsets={false}
+                >
+                {content}
+            </ScrollView>
         )
     }
 });
