@@ -139,13 +139,9 @@ var AnimateCell = React.createClass({
 
         var CellComponent = this.props.cellComponent;
 
-        var content = <View/>;
-
         var props = {dragHandlers: handlers, shouldUpdate: this.state.shouldUpdate, rowData: this.props.rowData};
 
-          content = (
-              <CellComponent {...this.props.cellProps} {...props}/>
-          );
+        var content = (<CellComponent {...this.props.cellProps} {...props}/>);
 
 
         return (

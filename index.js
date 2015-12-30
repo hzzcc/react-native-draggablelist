@@ -67,22 +67,36 @@ var DragableList = React.createClass({
         }
     },
 
+    setKeyGroups(dataSource) {
+        var keyGroups = {};
+        for (var i = 0; i < dataSource.length; i++) {
+            var item = dataSource[i];
+            var key = item.id.toString();
+            keyGroups[key] = item;
+        }
+        return keyGroups;
+    },
+
     componentWillReceiveProps(nextProps) {
         var {dataSource, keys} = nextProps;
-
+        
         if (keys && dataSource) {
             invariant(keys.length == dataSource.length, 'dataSource length should be equal to keys length');
+            var key_groups = this.setKeyGroups(dataSource);
             this.setState({
-                dataSource,
-                keys
+                keys,
+                key_groups,
             })
         }else if (keys && !dataSource) {
+            invariant(keys.length == this.props.dataSource.length, 'dataSource length should be equal to keys length');
             this.setState({
                 keys
             })
         }else if (dataSource) {
+            invariant(this.props.keys.length == dataSource.length, 'dataSource length should be equal to keys length');
+            var key_groups = this.setKeyGroups(dataSource);
             this.setState({
-                dataSource,
+                key_groups,
             })
         }
 
