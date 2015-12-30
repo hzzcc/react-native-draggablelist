@@ -19,7 +19,7 @@ var DragableList = React.createClass({
     mixins: [TimerMixin],
 
     propTypes: {
-        dataSource: PropTypes.array, //数据
+        dataSource: PropTypes.array.isRequired, //数据
         component: PropTypes.func.isRequired, //cell
         cellProps: PropTypes.object, //cell props
         shouldUpdateId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), //需要更新的cell id
