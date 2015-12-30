@@ -93,7 +93,7 @@ var DragableList = React.createClass({
                 keys
             })
         }else if (dataSource) {
-            invariant(this.props.keys.length == dataSource.length, 'dataSource length should be equal to keys length');
+            invariant(this.state.keys.length == dataSource.length, 'dataSource length should be equal to keys length');
             var key_groups = this.setKeyGroups(dataSource);
             this.setState({
                 key_groups,
@@ -148,6 +148,7 @@ var DragableList = React.createClass({
                             rowData={row_data}
                             onPressCell={this.props.onPressCell}
                             shouldUpdate={shouldUpdate}
+                            shouldUpdateId={this.props.shouldUpdateId}
                             />
                     );
                 } else {
@@ -178,6 +179,7 @@ var DragableList = React.createClass({
                             rowData={row_data}
                             onPressCell={this.props.onPressCell}
                             shouldUpdate={shouldUpdate}
+                            shouldUpdateId={this.props.shouldUpdateId}
                             />
                     );
                 }
@@ -202,6 +204,7 @@ var DragableList = React.createClass({
                         rowData={row_data}
                         onPressCell={this.props.onPressCell}
                         shouldUpdate={shouldUpdate}
+                        shouldUpdateId={this.props.shouldUpdateId}
                         />
                 );
             }
