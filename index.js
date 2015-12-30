@@ -188,7 +188,7 @@ var DragableList = React.createClass({
         }
 
         return (
-            <View style={{flex: 1}}}>
+            <View style={{flex: 1}}>
                 <ScrollView
                     style={{flex: 1}}
                     scrollEnabled={this.state.scrollable}
