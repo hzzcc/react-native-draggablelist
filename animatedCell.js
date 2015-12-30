@@ -69,9 +69,9 @@ var AnimateCell = React.createClass({
             this.props.toggleScroll(false);
         });
     },
-    _onLongPressPre: function () {
-        this.props.toggleScroll(false);
-    },
+    // _onLongPressPre: function () {
+    //     this.props.toggleScroll(false);
+    // },
 
     render(): ReactElement {
 
@@ -92,7 +92,7 @@ var AnimateCell = React.createClass({
                 onResponderGrant: (evt, gestureState) => {
                     this.state.pan.setValue({x: 0, y: 0});           // reset
                     this.state.pan.setOffset(this.props.restLayout); // offset from onLayout
-                    this.longTimerPre = this.setTimeout(this._onLongPressPre, 200);
+                    // this.longTimerPre = this.setTimeout(this._onLongPressPre, 200);
                     this.longTimer = this.setTimeout(this._onLongPress, 300);
                     var evt_native = evt.nativeEvent;
                     oriPageXY = {pageX: evt_native.pageX, pageY: evt_native.pageY };
@@ -104,7 +104,7 @@ var AnimateCell = React.createClass({
                     if (move_dis > 25) {
                         this.setState({shouldUpdate: false});
                         this.clearTimeout(this.longTimer);
-                        this.clearTimeout(this.longTimerPre);
+                        // this.clearTimeout(this.longTimerPre);
                         //setTimeout(() => this.props.toggleScroll(true), 100);
                     }
                 },
@@ -112,7 +112,7 @@ var AnimateCell = React.createClass({
                     this.setState({shouldUpdate: false});
                     if (!this.state.panResponder) {
                         this.clearTimeout(this.longTimer);
-                        this.clearTimeout(this.longTimerPre);
+                        // this.clearTimeout(this.longTimerPre);
                         this.props.toggleScroll(true);
                         //this._toggleIsActive();
                         console.log('onResponderRelease _toggleIsActive');

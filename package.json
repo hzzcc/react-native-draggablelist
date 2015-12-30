@@ -1,0 +1,27 @@
+{
+  "name": "react-native-dragablelist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hzzcc/react-native-dragablelist.git"
+  },
+  "keywords": [
+    "react-native",
+    "dragablelist"
+  ],
+  "author": "hzzcc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hzzcc/react-native-dragablelist/issues"
+  },
+  "homepage": "https://github.com/hzzcc/react-native-dragablelist#readme",
+  "dependencies": {
+    "react-native": "^0.17.0",
+    "react-timer-mixin": "^0.13.3"
+  }
+}
