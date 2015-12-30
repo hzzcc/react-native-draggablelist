@@ -28,8 +28,8 @@ var AnimateCell = React.createClass({
         };
     },
 
-    shouldComponentUpdate(nextProps) {
-        if (nextProps.shouldUpdate) {
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextProps.shouldUpdate || (nextState.shouldUpdate !== this.state.shouldUpdate)) {
             return true;
         }
         return false;

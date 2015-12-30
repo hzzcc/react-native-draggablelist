@@ -30,11 +30,16 @@ var DragableList = React.createClass({
         onPressCell: PropTypes.func, //
         scrollStyle: View.propTypes.style, //scroll view style
         contentInset: PropTypes.object, //scroll view contentInset
+
+        isScrollView: PropTypes.bool, //scrollView or view
+        toggleScroll: PropTypes.func, //if isScrollView is false, and outside component is a scrollView, should set this
+        shouldUpdate: PropTypes.bool, //update all cell
     },
 
     getDefaultProps() {
         return {
             dataSource: [],
+            isScrollView: true,
         };
     },
 
@@ -120,9 +125,12 @@ var DragableList = React.createClass({
     },
 
     toggleScroll: function (can) {
-        this.setState({
-            scrollable: can
-        });
+        if (this.props.isScrollView) {
+            this.setState({
+                scrollable: can
+            });
+        }
+        this.props.toggleScroll && this.props.toggleScroll(can)
     },
 
     render() {
@@ -143,7 +151,7 @@ var DragableList = React.createClass({
                 if (!key) return;
                 var row_data = this.state.key_groups[key];
 
-                var shouldUpdate = this.state.shouldUpdate || (shouldUpdateId === key);
+                var shouldUpdate = this.props.shouldUpdate || this.state.shouldUpdate || (shouldUpdateId === key);
                 if (key === this.state.activeKey) {
                     return (
                         <AnimatedCell
@@ -216,16 +224,17 @@ var DragableList = React.createClass({
             }
         }
 
+        var ViewTag = this.props.isScrollView ? ScrollView : View;
+
         return (
-            <ScrollView
+            <ViewTag
                 style={[{flex: 1}, this.props.scrollStyle]}
                 scrollEnabled={this.state.scrollable}
                 showsVerticalScrollIndicator={false}
                 contentInset={this.props.contentInset || {bottom: 0}}
-                automaticallyAdjustContentInsets={false}
                 >
                 {content}
-            </ScrollView>
+            </ViewTag>
         )
     }
 });
