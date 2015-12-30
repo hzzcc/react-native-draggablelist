@@ -26,3 +26,16 @@
     shouldUpdateId: the cell should be update
     onPressCell: when cell pressed
 
+####Attention 
+    
+    In your cell component, you should add below to your view 
+     
+     <View>
+        {/* other views*/}
+        <View {...this.props.dragHandlers} >
+            {/* this is the rect you can drag*/}
+        </View>
+        {/* other views*/}
+     </View>
+            
+
