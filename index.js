@@ -1,4 +1,5 @@
 /**
+ * @hzz
  * 可拖动
  */
 'use strict';
@@ -14,6 +15,7 @@ var {
 var AnimatedCell = require('./animatedCell');
 var invariant = require('invariant');
 var TimerMixin = require('react-timer-mixin');
+var _ = require('lodash');
 
 var DragableList = React.createClass({
     mixins: [TimerMixin],
@@ -78,26 +80,30 @@ var DragableList = React.createClass({
     },
 
     componentWillReceiveProps(nextProps) {
-        var {dataSource, keys} = nextProps;
+        var {dataSource} = nextProps;
         
-        if (keys && dataSource) {
-            invariant(keys.length == dataSource.length, 'dataSource length should be equal to keys length');
+        if (dataSource) {
+
             var key_groups = this.setKeyGroups(dataSource);
-            this.setState({
-                keys,
-                key_groups,
-            })
-        }else if (keys && !dataSource) {
-            invariant(keys.length == this.props.dataSource.length, 'dataSource length should be equal to keys length');
-            this.setState({
-                keys
-            })
-        }else if (dataSource) {
-            invariant(this.state.keys.length == dataSource.length, 'dataSource length should be equal to keys length');
-            var key_groups = this.setKeyGroups(dataSource);
-            this.setState({
-                key_groups,
-            })
+            if (this.state.keys.length > dataSource.length) { //delete some data
+                var newKeys = _.map(dataSource, (item) => {
+                    return item.id.toString();
+                });
+                newKeys = _.intersection(this.state.keys, newKeys);
+                this.setState({
+                    keys: newKeys,
+                    key_groups,
+                })
+            }else if (this.state.keys.length < dataSource.length){ //add some data
+                var newKeys = _.map(dataSource, (item) => {
+                    return item.id.toString();
+                });
+                newKeys = _.union(this.state.keys, newKeys);
+                this.setState({
+                    keys: newKeys,
+                    key_groups,
+                })
+            }
         }
 
     },
