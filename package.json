@@ -1,6 +1,6 @@
 {
   "name": "react-native-dragablelist",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,12 @@
     "url": "git+https://github.com/hzzcc/react-native-dragablelist.git"
   },
   "keywords": [
+    "react-component",
     "react-native",
-    "dragablelist"
+    "ios",
+    "android",
+    "drag",
+    "draggableList"
   ],
   "author": "hzzcc",
   "license": "ISC",
