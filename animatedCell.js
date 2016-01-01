@@ -61,18 +61,15 @@ var AnimateCell = React.createClass({
                     y: gestureState.dy + this.props.restLayout.y,
                 });
                 this.props.onDeactivate();
-                this.setTimeout(() => this.props.toggleScroll(true), 100);
                 this.setState({shouldUpdate: false});
+                this.props.toggleScroll(true);
             },
         })}, () => {
+            this.props.toggleScroll(false);
             this.setState({shouldUpdate: true});
             this.props.onActivate();
-            this.props.toggleScroll(false);
         });
     },
-     _onLongPressPre: function () {
-         this.props.toggleScroll(false);
-     },
 
     render(): ReactElement {
 
@@ -93,28 +90,21 @@ var AnimateCell = React.createClass({
                 onResponderGrant: (evt, gestureState) => {
                     this.state.pan.setValue({x: 0, y: 0});           // reset
                     this.state.pan.setOffset(this.props.restLayout); // offset from onLayout
-                    this.longTimerPre = this.setTimeout(this._onLongPressPre, 200);
                     this.longTimer = this.setTimeout(this._onLongPress, 300);
                     var evt_native = evt.nativeEvent;
                     oriPageXY = {pageX: evt_native.pageX, pageY: evt_native.pageY };
                 },
                 onResponderMove: (evt, gestureState) => {
                     var evt_native = evt.nativeEvent;
-                    var curPageXY = {pageX: evt_native.pageX, pageY: evt_native.pageY };
-                    var move_dis = Math.pow(oriPageXY.pageX -  curPageXY.pageX, 2) + Math.pow(oriPageXY.pageY -  curPageXY.pageY, 2);
-                    if (move_dis > 25) {
-                        this.setState({shouldUpdate: false});
-                        this.clearTimeout(this.longTimer);
-                        this.clearTimeout(this.longTimerPre);
-                        //setTimeout(() => this.props.toggleScroll(true), 100);
-                    }
+                    this.setState({shouldUpdate: false});
+                    this.clearTimeout(this.longTimer);
                 },
                 onResponderRelease: () => {
                     this.setState({shouldUpdate: false});
                     if (!this.state.panResponder) {
                         this.clearTimeout(this.longTimer);
-                        this.clearTimeout(this.longTimerPre);
                         this.props.toggleScroll(true);
+                        this.props.onDeactivate();
                         this.props.onPressCell && this.props.onPressCell(this.props.rowData);
                         //this._toggleIsActive();
                         console.log('onResponderRelease _toggleIsActive');

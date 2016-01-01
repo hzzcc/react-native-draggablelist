@@ -1,11 +1,15 @@
-## react native dragableList
+# react native dragableList
 
-###How do I use it?
+##Demo
     
-####Installation
+![demo](https://raw.githubusercontent.com/hzzcc/react-native-dragablelist/master/Image/example.gif)
+
+##How do I use it?
+    
+###Installation
     npm install react-native-dragablelist
    
-####Use in your code
+###Use in your code
 
     var DragableList = require('react-native-dragablelist');
 
@@ -34,11 +38,18 @@
     isScrollView:       is scrollView or view, 
     toggleScroll:       if isScrollView is false, and outside component is a scrollView, should set the callback for scrollEnabled state
     shouldUpdate:       update all cell
+
+####Simplest sample use is :
+            
+            <DraggableList
+                 component={Cell}
+                 dataSource={Data}
+                 />
     
-####Attention 
+###Attention 
     
     In your cell component, you should add below to your view 
-     
+    
      <View>
         {/* other views*/}
         <View {...this.props.dragHandlers} >
@@ -46,5 +57,7 @@
         </View>
         {/* other views*/}
      </View>
+     
+     this.props.rowData, you can get the data passed to cell, 
             
 
