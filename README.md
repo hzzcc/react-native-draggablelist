@@ -1,4 +1,4 @@
-# react native dragableList
+# react native draggableList
 
 ##Demo
     
@@ -11,9 +11,9 @@
    
 ###Use in your code
 
-    var DragableList = require('react-native-dragablelist');
+    var DraggableList = require('react-native-draggablelist');
 
-    <DragableList
+    <DraggableList
             dataSource={this.state.dataSource}
             component={Cell}
             cellProps={/*your cell props*/}
