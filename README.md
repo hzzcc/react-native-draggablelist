@@ -7,7 +7,7 @@
 ##How do I use it?
     
 ###Installation
-    npm install react-native-dragablelist
+    npm install react-native-draggablelist
    
 ###Use in your code
 
