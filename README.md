@@ -1,16 +1,16 @@
 # react native draggableList
 
-##Demo
+## Demo
     
 ![demo](https://raw.githubusercontent.com/hzzcc/react-native-dragablelist/master/Image/example.gif)
 
-##How do I use it?
+## How do I use it?
     
-###Installation
+### Installation
     
     npm install react-native-draggablelist
    
-###Use in your code
+### Use in your code
 
     var DraggableList = require('react-native-draggablelist');
 
@@ -40,14 +40,14 @@
     toggleScroll:       if isScrollView is false, and outside component is a scrollView, should set the callback for scrollEnabled state
     shouldUpdate:       update all cell
 
-####Simplest sample use is :
+#### Simplest sample use is :
             
             <DraggableList
                  component={Cell}
                  dataSource={Data}
                  />
     
-###Attention 
+### Attention 
     
     In your cell component, you should add below to your view 
     
