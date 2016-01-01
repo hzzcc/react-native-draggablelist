@@ -124,13 +124,13 @@ var DragableList = React.createClass({
         }
     },
 
-    toggleScroll: function (can) {
+    toggleScroll: function (can, callback) {
         if (this.props.isScrollView) {
             this.setState({
                 scrollable: can
-            });
+            }, callback);
         }
-        this.props.toggleScroll && this.props.toggleScroll(can)
+        this.props.toggleScroll && this.props.toggleScroll(can, callback)
     },
 
     render() {
@@ -230,6 +230,7 @@ var DragableList = React.createClass({
             <ViewTag
                 style={[{flex: 1}, this.props.scrollStyle]}
                 scrollEnabled={this.state.scrollable}
+                automaticallyAdjustContentInsets={false}
                 showsVerticalScrollIndicator={false}
                 contentInset={this.props.contentInset || {bottom: 0}}
                 >

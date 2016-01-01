@@ -36,6 +36,13 @@ var AnimateCell = React.createClass({
     },
 
     _onLongPress(): void {
+
+        this.props.toggleScroll(false, () => {
+            this.setTimeout(this.toSetPanResponder, 100);
+        });
+    },
+
+    toSetPanResponder() {
         var config = {tension: 40, friction: 3};
         this.state.pan.addListener((value) => {  //监听value的改变
             this.props.onMove && this.props.onMove(value);
@@ -49,7 +56,12 @@ var AnimateCell = React.createClass({
                 null,                                         // native event - ignore
                 {dx: new Animated.Value(0), dy: this.state.pan.y}, // links pan 这里设置关联的pan偏移量
             ]),
+            onPanResponderTerminate: (evt, gestureState) => {
+                console.log('onPanResponderTerminate');
+            },
+            onPanResponderTerminationRequest: (evt, gestureState) => false,
             onPanResponderRelease: (e, gestureState) => {
+                console.log('onPanResponderRelease');
                 LayoutAnimation.easeInEaseOut();  // animates layout update as one batch
                 Animated.spring(this.state.pop, {
                     toValue: 0,                     // Pop back to 0
@@ -65,8 +77,8 @@ var AnimateCell = React.createClass({
                 this.props.toggleScroll(true);
             },
         })}, () => {
-            this.props.toggleScroll(false);
             this.setState({shouldUpdate: true});
+            console.log('onActivate');
             this.props.onActivate();
         });
     },
@@ -95,17 +107,19 @@ var AnimateCell = React.createClass({
                     oriPageXY = {pageX: evt_native.pageX, pageY: evt_native.pageY };
                 },
                 onResponderMove: (evt, gestureState) => {
+                    console.log('onResponderMove');
                     var evt_native = evt.nativeEvent;
                     this.setState({shouldUpdate: false});
                     this.clearTimeout(this.longTimer);
                 },
                 onResponderRelease: () => {
+                    console.log('onResponderRelease');
                     this.setState({shouldUpdate: false});
                     if (!this.state.panResponder) {
                         this.clearTimeout(this.longTimer);
-                        this.props.toggleScroll(true);
-                        this.props.onDeactivate();
+                        this.props.onDeactivate && this.props.onDeactivate();
                         this.props.onPressCell && this.props.onPressCell(this.props.rowData);
+                        this.props.toggleScroll(true);
                         //this._toggleIsActive();
                         console.log('onResponderRelease _toggleIsActive');
                     }
