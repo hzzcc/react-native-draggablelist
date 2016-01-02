@@ -21,7 +21,6 @@ var AnimateCell = React.createClass({
 
     getInitialState: function () {
         return {
-            isActive: false,
             pan: new Animated.ValueXY(), // 减少样本矢量.
             pop: new Animated.Value(0),  // 初值.
             shouldUpdate: false,
@@ -37,9 +36,7 @@ var AnimateCell = React.createClass({
 
     _onLongPress(): void {
 
-        this.props.toggleScroll(false, () => {
-            this.setTimeout(this.toSetPanResponder, 100);
-        });
+        this.props.toggleScroll(false, this.toSetPanResponder);
     },
 
     toSetPanResponder() {
@@ -52,14 +49,31 @@ var AnimateCell = React.createClass({
             ...config,
         }).start();
         this.setState({panResponder: PanResponder.create({
+            onStartShouldSetPanResponder: () => true,
             onPanResponderMove: Animated.event([
                 null,                                         // native event - ignore
                 {dx: new Animated.Value(0), dy: this.state.pan.y}, // links pan 这里设置关联的pan偏移量
             ]),
             onPanResponderTerminate: (evt, gestureState) => {
                 console.log('onPanResponderTerminate');
+
+                this.props.toggleScroll(true);
+
+                LayoutAnimation.easeInEaseOut();  // animates layout update as one batch
+                Animated.spring(this.state.pop, {
+                    toValue: 0,                     // Pop back to 0
+                    ...config,
+                }).start();
+                this.setState({panResponder: undefined});
+                this.props.onMove && this.props.onMove({
+                    x: gestureState.dx + this.props.restLayout.x,
+                    y: gestureState.dy + this.props.restLayout.y,
+                });
+                this.props.onActivate && this.props.onActivate();
+                this.props.onDeactivate && this.props.onDeactivate();
+
+                this.setState({shouldUpdate: false});
             },
-            onPanResponderTerminationRequest: (evt, gestureState) => false,
             onPanResponderRelease: (e, gestureState) => {
                 console.log('onPanResponderRelease');
                 LayoutAnimation.easeInEaseOut();  // animates layout update as one batch
@@ -98,7 +112,7 @@ var AnimateCell = React.createClass({
         } else {
             var oriPageXY = {pageX: 0, pageY: 0};
             handlers = {
-                onStartShouldSetResponder: () => !this.state.isActive,
+                onStartShouldSetResponder: () => true,
                 onResponderGrant: (evt, gestureState) => {
                     this.state.pan.setValue({x: 0, y: 0});           // reset
                     this.state.pan.setOffset(this.props.restLayout); // offset from onLayout
@@ -114,14 +128,16 @@ var AnimateCell = React.createClass({
                 },
                 onResponderRelease: () => {
                     console.log('onResponderRelease');
-                    this.setState({shouldUpdate: false});
+
                     if (!this.state.panResponder) {
+                        this.setState({shouldUpdate: false, panResponder: undefined});
                         this.clearTimeout(this.longTimer);
-                        this.props.onDeactivate && this.props.onDeactivate();
-                        this.props.onPressCell && this.props.onPressCell(this.props.rowData);
+                        //this.props.onDeactivate && this.props.onDeactivate();
                         this.props.toggleScroll(true);
-                        //this._toggleIsActive();
+                        this.props.onPressCell && this.props.onPressCell(this.props.rowData);
                         console.log('onResponderRelease _toggleIsActive');
+                    }else{
+                        this.setState({shouldUpdate: false});
                     }
                 }
             };
@@ -138,8 +154,6 @@ var AnimateCell = React.createClass({
         var openVal = this.props.openVal;
         if (this.props.dummy) {
             animatedStyle.opacity = 0;
-        } else if (this.state.isActive) {
-            console.log('active');
         }
 
         var CellComponent = this.props.cellComponent;
@@ -151,27 +165,14 @@ var AnimateCell = React.createClass({
 
         return (
             <Animated.View
+                ref='CellView'
                 onLayout={this.props.onLayout}
-                style={[styles.dragView, dragStyle, animatedStyle, this.state.isActive ? styles.open : null]}>
+                style={[styles.dragView, dragStyle, animatedStyle]}>
                 {content}
             </Animated.View>
         );
     },
 
-    _toggleIsActive(velocity): void {
-        var config = {tension: 30, friction: 7};
-        if (this.state.isActive) {
-            Animated.spring(this.props.openVal, {toValue: 0, ...config}).start(() => {
-                this.setState({isActive: false}, this.props.onDeactivate);
-            });
-        } else {
-            this.props.onActivate();
-            this.setState({isActive: true, panResponder: undefined}, () => {
-                // this.props.openVal.setValue(1);
-                Animated.spring(this.props.openVal, {toValue: 1, ...config}).start();
-            });
-        }
-    }
 });
 
 var styles = StyleSheet.create({
