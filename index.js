@@ -148,11 +148,11 @@ var DragableList = React.createClass({
         if (this.state.keys.length > 0) {
 
             content = this.state.keys.map((key, idx) => {
-                if (!key) return;
+                if (key === null || key === undefined) return;
                 var row_data = this.state.key_groups[key];
 
-                var shouldUpdate = this.props.shouldUpdate || this.state.shouldUpdate || (shouldUpdateId === key);
-                if (key === this.state.activeKey) {
+                var shouldUpdate = this.props.shouldUpdate || this.state.shouldUpdate || (shouldUpdateId == key);
+                if (key == this.state.activeKey) {
                     return (
                         <AnimatedCell
                             key={key + 'd'}
@@ -200,7 +200,7 @@ var DragableList = React.createClass({
             });
             if (this.state.activeKey) {
                 var row_data = this.state.key_groups[this.state.activeKey];
-                var shouldUpdate = this.state.shouldUpdate || (shouldUpdateId === this.state.activeKey);
+                var shouldUpdate = this.state.shouldUpdate || (shouldUpdateId == this.state.activeKey);
                 content.push(
                     <AnimatedCell
                         key={this.state.activeKey}
