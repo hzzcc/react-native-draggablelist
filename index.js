@@ -5,6 +5,8 @@ import {
     View,
     ScrollView,
     LayoutAnimation,
+    StyleSheet,
+    Animated,
 } from 'react-native';
 
 var AnimatedCell = require('./animatedCell');
@@ -197,6 +199,9 @@ var DragableList = React.createClass({
                 var row_data = this.state.key_groups[this.state.activeKey];
                 var shouldUpdate = this.state.shouldUpdate || (shouldUpdateId == this.state.activeKey);
                 content.push(
+                    <Animated.View key="dark" style={[styles.darkening]} />
+                );
+                content.push(
                     <AnimatedCell
                         key={this.state.activeKey}
                         restLayout={this.state.activeInitialLayout}
@@ -266,5 +271,17 @@ function moveToClosest({activeKey, keys, restLayouts}, position) {
         return newKeys;
     }
 }
+
+var styles = StyleSheet.create({
+    darkening: {
+        backgroundColor: 'black',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        opacity: 0,
+    },
+});
 
 module.exports = DragableList;

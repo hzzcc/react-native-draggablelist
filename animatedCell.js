@@ -51,7 +51,7 @@ var AnimateCell = React.createClass({
                 {dx: new Animated.Value(0), dy: this.state.pan.y}, // links pan 这里设置关联的pan偏移量
             ]),
             onPanResponderTerminate: (evt, gestureState) => {
-                console.log('onPanResponderTerminate');
+                // console.log('onPanResponderTerminate');
 
                 this.props.toggleScroll(true);
 
@@ -71,7 +71,7 @@ var AnimateCell = React.createClass({
                 this.setState({shouldUpdate: false});
             },
             onPanResponderRelease: (e, gestureState) => {
-                console.log('onPanResponderRelease');
+                // console.log('onPanResponderRelease');
                 LayoutAnimation.easeInEaseOut();  // animates layout update as one batch
                 Animated.spring(this.state.pop, {
                     toValue: 0,                     // Pop back to 0
@@ -88,22 +88,26 @@ var AnimateCell = React.createClass({
             },
         })}, () => {
             this.setState({shouldUpdate: true});
-            console.log('onActivate');
+            // console.log('onActivate');
             this.props.onActivate();
         });
     },
 
     render(): ReactElement {
 
+        var dragStyle = {
+            position: 'relative',
+            transform:[{'translate':[0,0,0]}],
+        }
         if (this.state.panResponder) {
             var handlers = this.state.panResponder.panHandlers;
 
             var tmpLayout = this.state.pan.getLayout();
-            var dragStyle = {                 //  Used to position while dragging
+            dragStyle = {                 //  Used to position while dragging
                 position: 'absolute',           //  Hoist out of layout
                 left: 0,
                 right: 0,
-                transform: [{'translate':[0,0,1]}],
+                transform:[{'translate':[0,0,1]}],
                 ...tmpLayout,  //  Convenience converter
             };
         } else {
@@ -118,13 +122,13 @@ var AnimateCell = React.createClass({
                     oriPageXY = {pageX: evt_native.pageX, pageY: evt_native.pageY };
                 },
                 onResponderMove: (evt, gestureState) => {
-                    console.log('onResponderMove');
+                    // console.log('onResponderMove');
                     var evt_native = evt.nativeEvent;
                     this.setState({shouldUpdate: false});
                     this.clearTimeout(this.longTimer);
                 },
                 onResponderRelease: () => {
-                    console.log('onResponderRelease');
+                    // console.log('onResponderRelease');
 
                     if (!this.state.panResponder) {
                         this.setState({shouldUpdate: false, panResponder: undefined});
@@ -132,7 +136,7 @@ var AnimateCell = React.createClass({
                         //this.props.onDeactivate && this.props.onDeactivate();
                         this.props.toggleScroll(true);
                         this.props.onPressCell && this.props.onPressCell(this.props.rowData);
-                        console.log('onResponderRelease _toggleIsActive');
+                        // console.log('onResponderRelease _toggleIsActive');
                     }else{
                         this.setState({shouldUpdate: false});
                     }
@@ -145,7 +149,7 @@ var AnimateCell = React.createClass({
                 {scale: this.state.pop.interpolate({
                     inputRange: [0, 1],
                     outputRange: [1, 1]         // scale up from 1 to 1.3
-                })},
+                })}
             ],
         };
         var openVal = this.props.openVal;
@@ -162,9 +166,8 @@ var AnimateCell = React.createClass({
 
         return (
             <Animated.View
-                ref='CellView'
                 onLayout={this.props.onLayout}
-                style={[styles.dragView, dragStyle, animatedStyle]}>
+                style={[styles.dragView, animatedStyle, dragStyle]}>
                 {content}
             </Animated.View>
         );
