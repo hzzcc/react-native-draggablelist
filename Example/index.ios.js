@@ -1,33 +1,33 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ * @flow
  */
-'use strict';
 
-var React = require('react-native');
-var {
+import React, { Component } from 'react';
+import {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
-} = React;
+  View
+} from 'react-native';
 
-var Page = require('./page/index');
+import Page from './page';
 
-var Example = React.createClass({
-  render: function() {
+class Example extends Component {
+  render() {
     return (
-        <View style={styles.container}>
-          <Page />
-        </View>
+      <View style={styles.container}>
+        <Page />
+      </View>
     );
   }
-});
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
+    backgroundColor: '#F5FCFF',
   },
 });
 

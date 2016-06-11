@@ -1,16 +1,11 @@
-/**
- * @hzz
- * 可拖动
- */
 'use strict';
 
-var React = require('react-native');
-var {
+import React , {Component, PropTypes} from 'react'
+import {
     View,
     ScrollView,
     LayoutAnimation,
-    PropTypes,
-    } = React;
+} from 'react-native';
 
 var AnimatedCell = require('./animatedCell');
 var invariant = require('invariant');
@@ -86,7 +81,7 @@ var DragableList = React.createClass({
 
     componentWillReceiveProps(nextProps) {
         var {dataSource} = nextProps;
-        
+
         if (dataSource) {
 
             var key_groups = this.setKeyGroups(dataSource);

@@ -1,13 +1,11 @@
-'use strict';
-
-var React = require('react-native');
-var {
+import React , {Component} from 'react'
+import {
     AppRegistry,
     StyleSheet,
     Text,
     View,
     PixelRatio,
-    } = React;
+} from 'react-native';
 
 var Cell = React.createClass({
     render: function() {

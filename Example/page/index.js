@@ -1,12 +1,10 @@
-'use strict';
-
-var React = require('react-native');
-var {
+import React , {Component} from 'react'
+import {
     AppRegistry,
     StyleSheet,
     Text,
     View,
-    } = React;
+} from 'react-native';
 
 var DraggableList = require('react-native-draggablelist');
 
@@ -26,7 +24,7 @@ var Page = React.createClass({
             <DraggableList
                 component={Cell}
                 dataSource={Data}
-                />
+            />
         );
     }
 });
